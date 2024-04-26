@@ -460,7 +460,7 @@ public class LimitlessTask extends TaskContent {
                     }
 
                     if (tu1==12){
-                        for (int i1 = 11; i1 <= 12; i1++) {
+                        for (int i1 = 12; i1 <= 13; i1++) {
                             result = mFairy.findPic(74,48,155,363, "shFloor" + i1 + ".png");
                             LtLog.e(mFairy.getLineInfo("选层1    "+result.sim));
                             if (result.sim > 0.8f) {
@@ -481,14 +481,18 @@ public class LimitlessTask extends TaskContent {
                                     case 10:
                                         LtLog.e(mFairy.getLineInfo("雷鸣"));
                                         ceng1 = 10;
-                                        break;*/
+                                        break;
                                     case 11:
                                         LtLog.e(mFairy.getLineInfo("黑白"));
                                         ceng1 = 11;
-                                        break;
+                                        break;*/
                                     case 12:
                                         LtLog.e(mFairy.getLineInfo("战殇"));
                                         ceng1 = 12;
+                                        break;
+                                    case 13:
+                                        LtLog.e(mFairy.getLineInfo("银杏"));
+                                        ceng1 = 13;
                                         break;
                                 }
                                 break;
@@ -1110,6 +1114,7 @@ public class LimitlessTask extends TaskContent {
                     mFairy.onTap(0.8f, result1, 219,123,229,132,"收纳主线", Sleep);
                 }
 
+
                 result = mFairy.findPic(77,217,387,585, new String[]{ "zuoceTreasure2.png","zuoceTreasure3.png"});
                 if (result.sim > 0.7f) {
                     mFairy.onTap(0.8f, result, 1156,66,1167,78,"关闭任务", Sleep);
@@ -1134,6 +1139,10 @@ public class LimitlessTask extends TaskContent {
             }
 
             public void content_2() throws Exception {
+
+                result1=mFairy.findPic(1031,4,1275,171,new String[]{"cha10.png","bxcha.png","bxcha1.png","fxcha.png","shcha.png","rxcha.png","rxcha1.png"});
+                mFairy.onTap(0.9f,result1,"关叉2",300);
+
                 int ret = gameUtil.mission("qxTreasure1.png", 1);
                 if (ret == 1) {
                     setTaskName(3);
@@ -1183,15 +1192,18 @@ public class LimitlessTask extends TaskContent {
                 result = mFairy.findPic(1099, 277, 1173, 348,"Hangup1.png");
                 mFairy.onTap(0.8f, result, "关闭挂机", Sleep);
 
+                result = mFairy.findPic(823,545,1270,716,"qxComplete.png");
+                mFairy.onTap(0.8f, result, 1057,638,1065,644,"err七星完成任务", Sleep);
+
                 long dazeTime = mFairy.mMatTime(1215, 128, 61, 16, 0.9f);
                 LtLog.e(mFairy.getLineInfo("发呆时间=" + dazeTime));
-                if (dazeTime > 15) {
+                if (dazeTime > 5) {
                     setTaskName(1);return;
                    // mFairy.initMatTime();
-                  /*  LtLog.e(mFairy.getLineInfo("炼宝接取任务完毕"));
+/*                    LtLog.e(mFairy.getLineInfo("炼宝接取任务完毕"));
                     setTaskEnd();
                     return;*/
-                  /*  result = mFairy.findPic(18, 116, 532, 607, "zuoceTreasure.png");
+/*                    result = mFairy.findPic(18, 116, 532, 607, "zuoceTreasure.png");
                     if (result.sim > 0.7f) {
                         LtLog.e(mFairy.getLineInfo("炼宝接取任务完毕"));
                         setTaskEnd();

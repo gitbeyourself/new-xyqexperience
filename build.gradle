@@ -7,8 +7,8 @@ android {
         applicationId "com.xycqzsf.hjk"  // 线上版本(已传线上)"com.xycqcsf.hjk"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1323
-        versionName"1323"
+        versionCode 1348
+        versionName"1348"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     lintOptions {

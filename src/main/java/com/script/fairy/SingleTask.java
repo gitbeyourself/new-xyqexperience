@@ -27,7 +27,6 @@ public class SingleTask extends TaskContent {
         gameUtil = new GameUtil(mFairy);
     }
 
-
     public void novice() throws Exception {
         new SingleTask(mFairy) {
             @Override
@@ -40,17 +39,23 @@ public class SingleTask extends TaskContent {
 
             @Override
             public void content_0() throws Exception {
+                result1 = mFairy.findPic(5,4,202,62,"rxflhd.png");
                 result = mFairy.findPic("tuzhi.png");
-                if (result.sim > 0.8f) {
+                if (result.sim > 0.8f || result1.sim > 0.8f) {
                     LtLog.e(mFairy.getLineInfo("主线结束"));
                     setTaskEnd();
                     return;
                 }
+                result = mFairy.findPic(956,6,1275,149,"dtqh.png");
+                mFairy.onTap(0.9f, result,  "地图切换", Sleep);
 
-                long dazeTime = mFairy.mMatTime(1215, 128, 61, 16, 0.9f);
+                result = mFairy.findPic(4,5,200,72,"zdpt1.png");
+                mFairy.onTap(0.9f, result, 806,257,813,266, "退出组队", Sleep);
+
+                long dazeTime = mFairy.mMatTime(1109, 118, 52, 10, 0.9f);
                 if (dazeTime > 3) {
                     mFairy.initMatTime();
-                    result = mFairy.findPic("task team.png");
+                    result = mFairy.findPic(1,269,32,385,new String[]{"task team.png","task team.png1"});
                     mFairy.onTap(0.9f, result, 13, 233, 27, 257, "任务栏暗点切换到任务栏", Sleep);
 
                     result = mFairy.findPic(0,166,34,386,"task.png");
@@ -58,6 +63,10 @@ public class SingleTask extends TaskContent {
 
                     result = mFairy.findPic(44, 178, 254, 318, "main.png");
                     mFairy.onTap(0.7f, result, "左侧主线", Sleep);
+                    if (result.sim<0.8f){
+                        result = mFairy.findPic(44, 178, 254, 318, "zhi.png");
+                        mFairy.onTap(0.7f, result, "左侧支线", Sleep);
+                    }
                     if (picCountS(0.7f, result, "左侧主线") > 30) {
                         LtLog.e(mFairy.getLineInfo("主线结束"));
                         setTaskEnd();
@@ -65,14 +74,71 @@ public class SingleTask extends TaskContent {
                     }
                 }
 
-                result = mFairy.findPic(1111,3,1274,41,"tiaoguo2.png");
+                result = mFairy.findPic(43,215,156,243,"zbmj.png");
+                if (result.sim>0.8f){
+                    result = mFairy.findPic(813,285,958,331, "duihua4.png");
+                    if (result.sim>0.8f){
+                        mFairy.ranSwipe(150,550, 224,590, 1500, (long) 500, 1);
+                    }else{
+                        result = mFairy.findPic(817,264,931,347, "tansuo.png");
+                        mFairy.onTap(0.7f, result, "探索", Sleep);
+                    }
+                }
+
+                result = mFairy.findPic(43,215,156,243,"zbqh.png");
+                if (result.sim>0.8f){
+                    mFairy.onTap(0.7f, result,1245,238,1249,244, "菜单", Sleep);
+                    result = mFairy.findPic(911,173,1006,267, "zhuangbei1.png");
+                    if (result.sim>0.8f){
+                        mFairy.onTap(0.7f, result, "装备", Sleep);
+                        mFairy.onTap(0.7f, result, 874,656,884,660,"装备", Sleep);
+                        mFairy.onTap(0.7f, result,1245,34,1253,43, "装备", Sleep);
+                    }
+                }
+
+                result = mFairy.findPic(46,193,164,225, "kp.png");
+                if (result.sim>0.8f){
+                    mFairy.onTap(0.7f, result,1245,238,1249,244, "菜单", Sleep);
+                    result = mFairy.findPic(1004,264,1103,354, "shj1.png");
+                    if (result.sim>0.8f){
+                        mFairy.onTap(0.7f, result, "山海经", Sleep);
+                        mFairy.onTap(0.7f, result,1224,619,1228,626,"探索", Sleep);
+                        mFairy.onTap(0.7f, result,1224,619,1228,626, "探索", Sleep);
+                        mFairy.onTap(0.7f, result,1224,619,1228,626, "探索", Sleep);
+                        mFairy.onTap(0.7f, result,1181,386,1191,395, "探索一次", Sleep);
+                        mFairy.onTap(0.7f, result,1181,386,1191,395, "探索一次", Sleep);
+                        mFairy.onTap(0.7f, result,1246,31,1250,37, "关闭", Sleep);
+                        mFairy.onTap(0.7f, result,1246,31,1250,37, "关闭", Sleep);
+                    }
+
+                }
+                result = mFairy.findPic(695,190,1038,287, "shangzhen.png");
+                if (result.sim>0.8f){
+                    mFairy.onTap(0.7f, result,1201,439,1206,447, "上阵", Sleep);
+                    mFairy.onTap(0.7f, result,229,521,232,526,"选择", Sleep);
+                    mFairy.onTap(0.7f, result,1246,31,1250,37, "关闭", Sleep);
+                    mFairy.onTap(0.7f, result,1246,31,1250,37, "关闭", Sleep);
+                    mFairy.onTap(0.7f, result,1246,31,1250,37, "关闭", Sleep);
+                }
+                result = mFairy.findPic(1111,3,1274,41,new String[]{"tiaoguo2.png","tiaoguo5.png"});
                 mFairy.onTap(0.8f, result, "跳过", 1000);
+
+                result = mFairy.findPic(842,222,1127,572,"duihua2.png");
+                mFairy.onTap(0.8f, result, "对话选择", 1000);
 
                 result = mFairy.findPic(756,243,972,535,"hand.png");
                 mFairy.onTap(0.8f, result, "手", 4000);
 
                 result = mFairy.findPic("Automatically put on.png");
                 mFairy.onTap(0.8f, result, "自动穿上", Sleep);
+
+                result = mFairy.findPic(1191,123,1275,205,"Replica2.png");
+                if (result.sim > 0.8f) {
+                    result = mFairy.findPic(33,240,199,293,"fbmb.png");
+                    if (result.sim > 0.8f) {
+                        mFairy.onTap(103,272,109,279, "副本中点左侧任务", Sleep);
+                    }
+                }
 
                 result = mFairy.findPic("Replica.png");
                 if (result.sim > 0.8f) {
@@ -90,6 +156,9 @@ public class SingleTask extends TaskContent {
 
                 result = mFairy.findPic("iknow.png");
                 mFairy.onTap(0.8f, result, "知道了", 2000);
+
+                result = mFairy.findPic(982,589,1197,691,"tczc2.png");
+                mFairy.onTap(0.8f, result, "退出战场", 2000);
 
                 result = mFairy.findPic("Departure.png");
                 mFairy.onTap(0.8f, result, "坐骑出站", Sleep);
@@ -129,6 +198,18 @@ public class SingleTask extends TaskContent {
                     }else {
                         mFairy.onTap(0.8f, result1, 576, 621, 600, 637, "搜索", Sleep);
                     }
+                }
+
+                result1 = mFairy.findPic(171,162,243,249,"huangzhe.png");
+                if (result1.sim > 0.8f) {
+                    result = mFairy.findPic(319,17,395,97,"shendi.png");
+                    mFairy.onTap(0.8f, result, "神邸", Sleep);
+                    result = mFairy.findPic(157,99,362,305,"huangzhe1.png");
+                    mFairy.onTap(0.8f, result, "黄者", Sleep);
+                    mFairy.onTap(0.8f, result, 967,633,979,645,"突破", Sleep);
+                    mFairy.onTap(0.8f, result, 741,437,751,444,"确定", Sleep);
+                    mFairy.onTap(0.8f, result, 1245,28,1249,32,"退出", Sleep);
+                    mFairy.onTap(0.8f, result, 1245,28,1249,32,"退出", Sleep);
                 }
 
                 result = mFairy.findPic(340,592,901,710,"other5.png");
@@ -198,7 +279,7 @@ public class SingleTask extends TaskContent {
     }
 
     public void inOperation() throws Exception {
-        result = mFairy.findPic(1111,3,1274,41,new String[]{"tiaoguo2.png","tiaoguo3.png"});
+        result = mFairy.findPic(1111,3,1274,41,new String[]{"tiaoguo4.png","tiaoguo2.png","tiaoguo3.png"});
         mFairy.onTap(0.8f, result, "跳过", 1000);
         result = mFairy.findPic("smOverGraph.png");
         if (result.sim > 0.8f) {
@@ -988,6 +1069,9 @@ public class SingleTask extends TaskContent {
     public void xmqf() throws Exception {
         new SingleTask(mFairy) {
             @Override
+            public void inOperation() throws Exception {
+                super.inOperation();
+            }
             public void content_0() throws Exception {
                 setTaskName(1);
                 return;

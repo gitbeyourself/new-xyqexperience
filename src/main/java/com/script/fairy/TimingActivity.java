@@ -23,7 +23,7 @@ public class TimingActivity extends TaskContent {
     FindResult result2;
     FindResult result3;
     GameUtil gameUtil;
-    boolean zchd = true, hejiu = true, ylwq = true, qllj = true, jiuyousan = true, ljp = true, ljp1 = true, xhyx = true, sjhd = true, sjjz = true, jzwz = true, jdp = true, bwzq = true;
+    boolean zchd = true, hejiu = true, ylwq = true, qllj = true, jiuyousan = true, ljp = true, ljp1 = true, xhyx = true, mqzs = true, sjhd = true, sjjz = true, jzwz = true,rxjzwz = true, jdp = true, bwzq = true;
     TaskContent.ControlSplit begin = null;
 
     public TimingActivity(AtFairyImpl ATFairy) throws Exception {
@@ -165,6 +165,14 @@ public class TimingActivity extends TaskContent {
                 back = 1;
             }
 
+            //秘潜铸身
+            if (AtFairyConfig.getOption("9303").equals("1") && mqzs && h >= 10 && h < 18) {
+                gameUtil.goCity("轩辕");
+                mqzs();
+                mqzs = false;
+                back = 1;
+            }
+
             //	赛季剑指
             if (AtFairyConfig.getOption("8855").equals("1") && sjjz && s > 36000 && s < 85800) {
                 gameUtil.goCity("轩辕");
@@ -178,7 +186,7 @@ public class TimingActivity extends TaskContent {
 
                 boolean j = false;//判断是否开始剑指王者活动
 
-                if (AtFairyConfig.getOption("jjc").equals("2")) {
+                if (AtFairyConfig.getOption("jjc").equals("1") ||AtFairyConfig.getOption("jjc").equals("2")) {
                     LtLog.e(mFairy.getLineInfo("用户勾选无限打 - 开始活动"));
                     j = true;
                 } else {
@@ -233,6 +241,47 @@ public class TimingActivity extends TaskContent {
         return back;
 
     }
+    public int rxbtimingActivity() throws Exception {
+        int h = mFairy.dateHour();
+        int m = mFairy.dateMinute();
+        int w = mFairy.week();
+        int s = (h * 60 + m) * 60;
+        int sm = s * 1000;
+        int back = 0;
+        for (int i = 0; i <= 1; i++) {
+            LtLog.e("热血版查看限时任务！！！！！" + i);
+
+            //  剑指王者
+            if (AtFairyConfig.getOption("9301").equals("1") && rxjzwz) {
+                boolean j = false;//判断是否开始剑指王者活动
+                if (AtFairyConfig.getOption("rxwxzx").equals("1")) {
+                    LtLog.e(mFairy.getLineInfo("用户勾选无限打 - 开始活动"));
+                    j = true;
+                } else {
+                    if (AtFairyConfig.getOption("rxxszx").equals("1")) {//是否勾选限时
+                        if (!AtFairyConfig.getOption("rxkssj").equals("") && !AtFairyConfig.getOption("rxjssj").equals("")) {//是否设置了时间
+                            ControlSplit start_time = strSplit(AtFairyConfig.getOption("rxkssj"));//开始时间
+                            ControlSplit stop_time = strSplit(AtFairyConfig.getOption("rxjssj"));//结束时间
+                            if ((h > start_time.h && h < stop_time.h) || (h == start_time.h && m >= start_time.m) || (h == stop_time.h && m < stop_time.m)) {
+                                j = true;
+                            }
+                        } else {
+                            LtLog.e(mFairy.getLineInfo("玩家没有设置时间！！！"));
+                        }
+                    }
+                }
+                if (j) {
+                    LtLog.e(mFairy.getLineInfo("开始活动"));
+                    rxjzwz();
+                    rxjzwz = false;
+                    back = 1;
+                }
+            }
+
+        }
+        return back;
+
+    }
 
     public void inOperation() throws Exception {
         result = mFairy.findPic("smOverGraph.png");
@@ -276,6 +325,301 @@ public class TimingActivity extends TaskContent {
             picCountMap.clear();
         }
     }
+
+    public void rxjzwz() throws Exception {
+        new TimingActivity(mFairy) {
+            public void inOperation() throws Exception {
+                super.inOperation();
+                int m = mFairy.dateMinute();
+                int h = mFairy.dateHour();
+                int s = (h * 60 + m) * 60;
+
+                if (AtFairyConfig.getOption("rxxszx").equals("1")) {//是否勾选限时
+                    if (!AtFairyConfig.getOption("rxjssj").equals("")) {//是否设置了时间
+                        ControlSplit stop_time = strSplit(AtFairyConfig.getOption("rxjssj"));//结束时间
+                        if ((h > stop_time.h) || (h == stop_time.h && m > stop_time.m)) {
+                            LtLog.e(mFairy.getLineInfo("已经达到设置的时间,结束任务!"));
+                            setTaskEnd();
+                            return;
+                        }
+                    }
+                }
+            }
+            int ydcount = 0;
+            int x = 0, y = 0, x1 = 0, y1 = 0;
+            boolean jjtime = true;
+
+            @Override
+            public void content_0() throws Exception {
+                gameUtil.close(1);
+                setTaskName(1);
+                return;
+            }
+
+            public void content_1() throws Exception {
+                if (overtime(15, 0))
+
+                result = mFairy.findPic(1185,5,1229,71, "rxjzwzxdt.png");
+                mFairy.onTap(0.8f, result,  "剑指王者小地图", 1000);
+
+                result = mFairy.findPic(959,2,1193,135, "rxjzwzxdt1.png");
+                mFairy.onTap(0.8f, result, "小地图进入", Sleep);
+
+                result = mFairy.findPic(5,2,224,52, new String[]{"jz.png", "jz1.png", "jz2.png"});
+                if (result.sim > 0.8f) {
+                    mFairy.onTap(0.8f, result, "剑指王者", 500);
+                    for (int i = 0; i < 20; i++) {
+                        result = mFairy.findPic(474,105,790,190,"rxwkfpp.png");
+                        if (result.sim > 0.8f) {
+                            LtLog.e("未开放!!!");
+                            setTaskEnd();
+                            return;
+                        }
+                    }
+                }
+
+                result = mFairy.findPic(543,71,731,143, "rxzdjd.png");
+                if (result.sim > 0.8f){
+                    LtLog.e("活动地图中!!!");
+                    setTaskName(2);
+                    return;
+                }
+
+                result = mFairy.findPic(5,2,224,52, "rxjzwz.png");
+                if (result.sim > 0.8f) {
+                    LtLog.e("剑指地图选择界面中!!!");
+                    if (AtFairyConfig.getOption("jzwzdt").equals("1")) {
+                        result = mFairy.findPic(354,307,607,450, "rxdxhz.png");
+                    }
+                    if (AtFairyConfig.getOption("jzwzdt").equals("2")) {
+                        result = mFairy.findPic(680,334,908,440, "rxxxdz.png");
+                    }
+                    if (AtFairyConfig.getOption("jzwzdt").equals("3")) {
+                        result = mFairy.findPic(1010,339,1223,447, "rxgpjj.png");
+                    }
+                    mFairy.onTap(0.8f, result, "地图选择", 1000);
+                    if (result.sim > 0.8f) {
+                        result1 = mFairy.findPic(552,611,1047,707, new String[]{"rxgrpp.png"});
+                        if (result1.sim > 0.8f) {
+                            LtLog.e("活动开始!!!");
+                            setTaskName(2);
+                            return;
+                        }
+                    }
+                }
+
+                result = mFairy.findPic(474,105,790,190,"rxwkfpp.png");
+                if (result.sim > 0.8f) {
+                    LtLog.e("未开放!!!");
+                    setTaskEnd();
+                    return;
+                }
+            }
+
+            public void content_2() throws Exception {
+                if (overtime(30, 0)) return;
+
+                result = mFairy.findPic(552,611,1047,707, new String[]{"rxgrpp.png"});
+                if (result.sim > 0.8f) {
+                    mFairy.onTap(0.8f, result, "个人匹配", Sleep);
+                    for (int i = 0; i < 10; i++) {
+                        result = mFairy.findPic(709,85,783,196, "rxwkfpp.png");
+                        if (result.sim > 0.8f) {
+                            LtLog.e("未开放!!!");
+                            setTaskEnd();
+                            return;
+                        }
+                    }
+                }
+
+                result = mFairy.findPic(481,67,671,188, new String[]{"rxwkfpp.png","rxzctc.png"});
+                if (result.sim > 0.8f) {
+                    LtLog.e("战场逃出等待!!!");
+                    mFairy.sleep(100000);
+                }
+
+                result = mFairy.findPic(420,390,840,492, "rxjrzd.png");
+                mFairy.onTap(0.8f, result, "加入战斗", Sleep);
+
+                result = mFairy.findPic(369, 265, 920, 500, "zp.png");
+                mFairy.onTap(0.8f, result, 625, 428, 659, 448, "战袍确认", Sleep);
+
+                result = mFairy.findPic(826,253,1065,345, "rxgxhd.png");
+                mFairy.onTap(0.8f, result, 940,508,947,514,"确认", Sleep);
+
+                result = mFairy.findPic(349, 253, 913, 518, "yjzdwz.png");
+                if (result.sim > 0.8f) {
+                    result = mFairy.findPic(657, 392, 913, 503, "Intheteam.png");
+                    mFairy.onTap(0.8f, result, "队伍中确定", Sleep);
+                }
+
+                result = mFairy.findPic(404, 467, 883, 597, "jzwzppz.png");
+                if (result.sim > 0.8f) {
+                    err = 0;
+                    LtLog.e(mFairy.getLineInfo("匹配中"));
+                }
+                result = mFairy.findPic(567,431,706,519, "rxfh.png");
+                if (result.sim > 0.8f) {
+                    err = 0;
+                    LtLog.e(mFairy.getLineInfo("等待复活"));
+                }
+
+                result = mFairy.findPic(395,3,896,141, "rxvs.png");
+                if (result.sim > 0.8f) {
+                    result = mFairy.findPic(527,2,607,68, "rxwf.png");
+                    result2 = mFairy.findPic(1119, 4, 1280, 37, new String[]{"1v1gpjjc.png"});
+                    result1 = mFairy.findPic(1174,8,1232,125, new String[]{"xqby.png"});
+                    result3 = mFairy.findPic(1119, 4, 1280, 37, "3v3.png");
+                    if (result3.sim > 0.8f) {
+                        LtLog.e("3v3竞技场");
+                        if (result.sim > 0.8f) {
+                            LtLog.e("我方在左边");
+                            x = 172;
+                            y = 448;
+                            x1 = 172;
+                            y1 = 679;
+                        } else {
+                            LtLog.e("我方在右边");
+                            x = 172;
+                            y = 448;
+                            x1 = 172;
+                            y1 = 679;
+                        }
+                    }
+                    if (result2.sim > 0.8f) {
+                        if (result.sim > 0.8f) {
+                            LtLog.e("我方在左边");
+                            x = 172;
+                            y = 430;
+                            x1 = 172;
+                            y1 = 666;
+                        } else {
+                            LtLog.e("我方在右边");
+                            x = 238;
+                            y = 496;
+                            x1 = 97;
+                            y1 = 652;
+                        }
+                    }
+                    if (result1.sim > 0.8f) {
+                        if (result.sim > 0.8f) {
+                            LtLog.e("竞技场我方在左边 直走");
+                            x = 175;
+                            y = 496;
+                            x1 = 175;
+                            y1 = 651;
+                        } else {
+                            LtLog.e("竞技场我方在右边 直走");
+                            x = 175;
+                            y = 496;
+                            x1 = 175;
+                            y1 = 651;
+                        }
+                    }
+                }
+
+                result = mFairy.findPic(395,3,896,141, "rxvs.png");
+                result = mFairy.findPic(1118, 2, 1280, 33, new String[]{"gp.png", "jjc.png",});
+                result2 = mFairy.findPic(543,71,731,143, "rxzdjd.png");
+                if (result2.sim > 0.8f) {
+                    if (jjtime) {
+                        Thread.sleep(12000);
+                        jjtime = false;
+                    }
+                    err = 0;
+                    LtLog.e(mFairy.getLineInfo("竞技场中"));
+                    result3 = mFairy.findPic(304,101,418,198, new String[]{"rxduishou.png","rxduishou1.png"});
+                    if (result3.sim > 0.85f) {
+                        LtLog.e(mFairy.getLineInfo("有敌人"));
+                        mFairy.onTap(1172, 610, 1191, 622, "普攻下", 200);
+                        mFairy.onTap(1172, 610, 1191, 622, "普攻下", 200);
+                        mFairy.onTap(1118, 483, 1138, 497, "技能1", 300);
+                        mFairy.onTap(1223, 473, 1242, 489, "技能2", 300);
+                        mFairy.onTap(1039, 552, 1057, 569, "技能3", 300);
+                        mFairy.onTap(1049, 646, 1065, 663, "技能4", 300);
+                        mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                        mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                        mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                        mFairy.onTap(953, 646, 960, 656, "技能5", 300);
+                        mFairy.onTap(952, 548, 962, 560, "技能6", 300);
+                        mFairy.onTap(1126, 394, 1129, 403, "技能7", 300);
+                        mFairy.onTap(1233, 382, 1236, 391, "技能8", 300);
+                        mFairy.onTap(1118, 483, 1138, 497, "技能1", 300);
+                        mFairy.onTap(1223, 473, 1242, 489, "技能2", 300);
+                        mFairy.onTap(1039, 552, 1057, 569, "技能3", 300);
+                        mFairy.onTap(1049, 646, 1065, 663, "技能4", 300);
+                    } else {
+                        result3 = mFairy.findPic(826,172,1048,412, "dsxz.png");
+                        if (result3.sim > 0.85f) {
+                            //mFairy.onTap(0.8f, result3, "选择下对手", 100);
+                            mFairy.onTap(1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(1118, 483, 1138, 497, "技能1", 300);
+                            mFairy.onTap(1223, 473, 1242, 489, "技能2", 300);
+                            mFairy.onTap(1039, 552, 1057, 569, "技能3", 300);
+                            mFairy.onTap(1049, 646, 1065, 663, "技能4", 300);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(953, 646, 960, 656, "技能5", 300);
+                            mFairy.onTap(952, 548, 962, 560, "技能6", 300);
+                            mFairy.onTap(1126, 394, 1129, 403, "技能7", 300);
+                            mFairy.onTap(1233, 382, 1236, 391, "技能8", 300);
+                            mFairy.onTap(1118, 483, 1138, 497, "技能1", 300);
+                            mFairy.onTap(1223, 473, 1242, 489, "技能2", 300);
+                            mFairy.onTap(1039, 552, 1057, 569, "技能3", 300);
+                            mFairy.onTap(1049, 646, 1065, 663, "技能4", 300);
+                        }else{
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 200);
+                            LtLog.e(mFairy.getLineInfo("没有敌人，移动一下"));
+                        }
+                        ydcount++;
+                        if (ydcount < 15) {
+                            mFairy.ranSwipe(174, 572, x, y, 3000, (long) 100, 1);
+                        } else if (ydcount >= 15 && ydcount <= 17) {
+                            mFairy.ranSwipe(174, 572, x1, y1, 3000, (long) 100, 1);
+                        }
+                        if (ydcount > 17) {
+                            ydcount = 0;
+                        }
+                    }
+                }
+                result = mFairy.findPic(996,464,1192,547,"rxcksj.png");
+                result1 = mFairy.findPic(967,580,1190,690,"rxtczc.png");
+                if (result.sim > 0.8f||result1.sim > 0.8f) {
+                    jjtime = true;
+                    LtLog.e("竞技结束");
+                    if (AtFairyConfig.getOption("rxsstz").equals("1")) {
+                        result2 = mFairy.findPic(439,8,858,179, new String[]{"rxshengli.png", "rxshengli1.png", "sheng.png"});
+                        if (result2.sim > 0.8f) {
+                            LtLog.e(mFairy.getLineInfo("胜利一次完成"));
+                            result = mFairy.findPic(996,464,1192,547,"rxcksj.png");
+                            mFairy.onTap(0.8f, result, "查看数据", Sleep);
+
+                            result = mFairy.findPic(967,580,1190,690,"rxtczc.png");
+                            mFairy.onTap(0.8f, result, "退出战场", Sleep);
+                            if (result.sim > 0.8f) {
+                                setTaskEnd();
+                                return;
+                            }
+                        }
+                    }else{
+                        result = mFairy.findPic(996,464,1192,547,"rxcksj.png");
+                        mFairy.onTap(0.8f, result, "查看数据", Sleep);
+
+                        result1 = mFairy.findPic(967,580,1190,690,"rxtczc.png");
+                        mFairy.onTap(0.8f, result, "退出战场", Sleep);
+                        if (result.sim > 0.8f) {
+                            setTaskName(1);
+                            return;
+                        }
+                    }
+                }
+            }
+        }.taskContent(mFairy, "热血版剑指王者中");
+    } //热血版剑指王者
 
     public void sjjz1() throws Exception {
         new TimingActivity(mFairy) {
@@ -341,7 +685,7 @@ public class TimingActivity extends TaskContent {
                 if (result.sim > 0.8f) {
                     err=0;
                 }
-                result = mFairy.findPic(298,475,1027,682, new String[]{"bhjc1.png"});
+                result = mFairy.findPic(298,475,1027,682, new String[]{"bhjc.png"});
                 mFairy.onTap(0.8f, result, "八荒进程", 1500);
                 if (result.sim > 0.8f) {
                     err=0;
@@ -519,7 +863,7 @@ public class TimingActivity extends TaskContent {
         }.taskContent(mFairy, "赛季剑指");
     } //赛季剑指
 
-    public void sjhd() throws Exception {
+    public void mqzs() throws Exception {
         new TimingActivity(mFairy) {
             public void inOperation() throws Exception {
                 super.inOperation();
@@ -559,14 +903,14 @@ public class TimingActivity extends TaskContent {
                 result2 = mFairy.findPic(298,475,1027,682, new String[]{"bhjc.png"});
                 mFairy.onTap(0.8f, result2, "八荒进程", 1500);
 
-                result = mFairy.findPic(55, 127, 1197, 340, new String[]{"sfdz.png"});
+                result = mFairy.findPic(55, 127, 1197, 340, new String[]{"mqzs.png"});
                 if (result.sim > 0.8f || result1.sim > 0.8f || result2.sim > 0.8f) {
                     a = 0;
                 } else {
                     a++;
                 }
                 if (result.sim > 0.8f) {
-                    mFairy.onTap(0.8f, result, "赛季活动", Sleep);
+                    mFairy.onTap(0.8f, result, "秘潜铸身", Sleep);
                     n = 0;
                     setTaskName(2);
                     return;
@@ -612,7 +956,7 @@ public class TimingActivity extends TaskContent {
 
                 result = mFairy.findPic(524,502,786,654, new String[]{"new_jymatching.png", "sjhdgrpp.png"});
                 if (result.sim > 0.8f) {
-                    result1 = mFairy.findPic(545,522,772,656, "33.png");
+                    result1 = mFairy.findPic(683,599,742,638, "33.png");
                     if (result1.sim > 0.8f) {
                         LtLog.e("无奖励次数");
                         setTaskEnd();
@@ -638,13 +982,16 @@ public class TimingActivity extends TaskContent {
                 result = mFairy.findPic(367, 270, 916, 508, "sjhdqr.png");
                 mFairy.onTap(0.8f, result, "确认", Sleep);
 
+                result = mFairy.findPic(543,211,928,324, "wzgw.png");
+                mFairy.onTap(0.8f, result, 755,587,762,596,"确认", Sleep);
+
                 result = mFairy.findPic(1104, 1, 1280, 34, "sjhddt.png");
                 if (result.sim > 0.8f) {
                     err = 0;
                     LtLog.e(mFairy.getLineInfo("秘潜铸身中"));
-                    result = mFairy.findPic(35, 317, 260, 356, "sjhdjljs.png");
+                    result = mFairy.findPic(477,0,796,77, "sjhdjljs.png");
                     if (result.sim > 0.8f) {
-                        LtLog.e(mFairy.getLineInfo("秘潜铸身中"));
+                        LtLog.e(mFairy.getLineInfo("秘潜铸身中1"));
 
                         mFairy.onTap(1053, 658, 1058, 663, "cs技能1", 500);
                         mFairy.onTap(1055, 558, 1059, 562, "cs技能2", 500);
@@ -695,8 +1042,8 @@ public class TimingActivity extends TaskContent {
 
             }
 
-        }.taskContent(mFairy, "赛季活动中");
-    } //赛季活动
+        }.taskContent(mFairy, "秘潜铸身中");
+    } //秘潜铸身
 
     public void sjjz() throws Exception {
         new TimingActivity(mFairy) {
@@ -799,8 +1146,9 @@ public class TimingActivity extends TaskContent {
                 result = mFairy.findPic("zhanpao.png");
                 mFairy.onTap(0.8f, result, 641, 437, 650, 443, "战袍模式", Sleep);
 
+                result = mFairy.findPic(463,503,610,552,"hdjs.png");
                 result = mFairy.findPic(492,517,515,541,"02.png");
-                if (result.sim > 0.8f) {
+                if (result.sim > 0.8f || result1.sim > 0.8f) {
                     LtLog.e("奖励次数无 退出");
                     setTaskEnd();
                 }else{
@@ -1208,7 +1556,7 @@ public class TimingActivity extends TaskContent {
             int ydcount = 0, x11 = 0, x12 = 0, n = 0;
             int x = 167, y = 478, x1 = 173, y1 = 662, a = 0;
             int t=0;
-            boolean jjtime = true;
+            boolean jjtime = true,dr=false;
 
             @Override
             public void content_0() throws Exception {
@@ -1325,7 +1673,7 @@ public class TimingActivity extends TaskContent {
                 result = mFairy.findPic(584, 4, 700, 99, "vs.png");
                 if (result.sim > 0.8f) {
                     result = mFairy.findPic(765, 53, 848, 96, "difang.png");
-                    result2 = mFairy.findPic(1119, 4, 1280, 37, new String[]{"1v1gpjjc.png"});
+                    result2 = mFairy.findPic(1119, 4, 1280, 37, new String[]{"5v5gpjj.png"});
                     result1 = mFairy.findPic(1119, 4, 1280, 37, new String[]{"1d1jjc.png", "jlpk.png"});
                     result3 = mFairy.findPic(1119, 4, 1280, 37, "3v3.png");
                     if (result3.sim > 0.8f) {
@@ -1345,18 +1693,19 @@ public class TimingActivity extends TaskContent {
                         }
                     }
                     if (result2.sim > 0.8f) {
+                        LtLog.e("5v5公平竞技");
                         if (result.sim > 0.8f) {
                             LtLog.e("我方在左边");
-                            x = 172;
-                            y = 430;
-                            x1 = 172;
-                            y1 = 666;
+                            x = 189;
+                            y = 504;
+                            x1 = 149;
+                            y1 = 641;
                         } else {
                             LtLog.e("我方在右边");
-                            x = 238;
-                            y = 496;
-                            x1 = 97;
-                            y1 = 652;
+                            x = 189;
+                            y = 504;
+                            x1 = 149;
+                            y1 = 641;
                         }
                     }
                     if (result1.sim > 0.8f) {
@@ -1368,10 +1717,10 @@ public class TimingActivity extends TaskContent {
                             y1 = 663;
                         } else {
                             LtLog.e("竞技场我方在右边");
-                            x = 97;
-                            y = 709;
-                            x1 = 99;
-                            y1 = 636;
+                            x = 232;
+                            y = 532;
+                            x1 = 113;
+                            y1 = 627;
                         }
                     }
                 }
@@ -1386,9 +1735,43 @@ public class TimingActivity extends TaskContent {
                     }
                     err = 0;
                     LtLog.e(mFairy.getLineInfo("竞技场中"));
-                    result3 = mFairy.findPic(317,82,573,164, "duishou.png");
-                    if (result3.sim > 0.85f) {
-                        LtLog.e(mFairy.getLineInfo("有敌人"));
+                    result1 = mFairy.findPic(384,108,563,149, "duishou.png");
+                    result2 = mFairy.findPic(761,146,876,227, "duishou1.png");
+                    if (result1.sim >0.8f || result2.sim >0.8f){
+                        dr=true;
+                        while (dr){
+                            LtLog.e(mFairy.getLineInfo("有敌人"));
+                            mFairy.onTap(1172, 610, 1191, 622, "普攻下", 50);
+                            mFairy.onTap(1172, 610, 1191, 622, "普攻下", 50);
+                            mFairy.onTap(1118, 483, 1138, 497, "技能1", 50);
+                            mFairy.onTap(1223, 473, 1242, 489, "技能2", 50);
+                            mFairy.onTap(1039, 552, 1057, 569, "技能3", 50);
+                            mFairy.onTap(1049, 646, 1065, 663, "技能4", 50);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                            mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                            mFairy.onTap(953, 646, 960, 656, "技能5", 50);
+                            mFairy.onTap(952, 548, 962, 560, "技能6", 50);
+                            mFairy.onTap(1126, 394, 1129, 403, "技能7", 50);
+                            mFairy.onTap(1233, 382, 1236, 391, "技能8", 50);
+                            mFairy.onTap(1118, 483, 1138, 497, "技能1", 50);
+                            mFairy.onTap(1223, 473, 1242, 489, "技能2", 50);
+                            mFairy.onTap(1039, 552, 1057, 569, "技能3", 50);
+                            mFairy.onTap(1049, 646, 1065, 663, "技能4", 50);
+                            result1 = mFairy.findPic(317,82,573,164, "duishou.png");
+                            result2 = mFairy.findPic(761,146,876,227, "duishou1.png");
+                            if (result1.sim >0.8f || result2.sim >0.8f){
+                                dr=true;
+                            }else{
+                                dr=false;
+                            }
+                            result1 = mFairy.findPic(985,463,1191,559, new String[]{"chakanshuju1.png","chakanshuju.png"});
+                            result2 = mFairy.findPic(839, 5, 1277, 125, new String[]{"3v3leave.png", "3v3leave1.png"});
+                            if (result1.sim >0.8f || result2.sim >0.8f){
+                                dr=false;
+                            }
+                        }
+                        /*LtLog.e(mFairy.getLineInfo("有敌人"));
                         mFairy.onTap(0.8f, result3, "选择对手", Sleep);
                         mFairy.onTap(1172, 610, 1191, 622, "普攻下", 50);
                         mFairy.onTap(1172, 610, 1191, 622, "普攻下", 50);
@@ -1406,7 +1789,7 @@ public class TimingActivity extends TaskContent {
                         mFairy.onTap(1118, 483, 1138, 497, "技能1", 50);
                         mFairy.onTap(1223, 473, 1242, 489, "技能2", 50);
                         mFairy.onTap(1039, 552, 1057, 569, "技能3", 50);
-                        mFairy.onTap(1049, 646, 1065, 663, "技能4", 50);
+                        mFairy.onTap(1049, 646, 1065, 663, "技能4", 50);*/
                     } else {
                         result3 = mFairy.findPic(1033,168,1279,358, "dsxz.png");
                         mFairy.onTap(0.8f, result3, "选择下对手", 100);
@@ -1416,9 +1799,50 @@ public class TimingActivity extends TaskContent {
                         LtLog.e(mFairy.getLineInfo("没有敌人，移动一下"));
                         ydcount++;
                         if (ydcount < 15) {
-                            mFairy.ranSwipe(174, 572, x, y, 3000, (long) 100, 1);
+                            mFairy.ranSwipe(175, 575, x, y, 2500, (long) 100, 1);
                         } else if (ydcount >= 15 && ydcount <= 17) {
-                            mFairy.ranSwipe(174, 572, x1, y1, 3000, (long) 100, 1);
+                            mFairy.ranSwipe(175, 575, x1, y1, 2500, (long) 100, 1);
+                        }
+                        mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                        mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                        mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+
+                        result1 = mFairy.findPic(317,82,573,164, "duishou.png");
+                        result2 = mFairy.findPic(761,146,876,227, "duishou1.png");
+                        if (result1.sim >0.8f || result2.sim >0.8f)  {
+                            while (dr) {
+                                LtLog.e(mFairy.getLineInfo("有敌人"));
+                                mFairy.onTap(0.8f, result3, "选择对手", Sleep);
+                                mFairy.onTap(1172, 610, 1191, 622, "普攻下", 50);
+                                mFairy.onTap(1172, 610, 1191, 622, "普攻下", 50);
+                                mFairy.onTap(1118, 483, 1138, 497, "技能1", 50);
+                                mFairy.onTap(1223, 473, 1242, 489, "技能2", 50);
+                                mFairy.onTap(1039, 552, 1057, 569, "技能3", 50);
+                                mFairy.onTap(1049, 646, 1065, 663, "技能4", 50);
+                                mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                                mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                                mFairy.onTap(0.8f, result, 1172, 610, 1191, 622, "普攻下", 100);
+                                mFairy.onTap(953, 646, 960, 656, "技能5", 50);
+                                mFairy.onTap(952, 548, 962, 560, "技能6", 50);
+                                mFairy.onTap(1126, 394, 1129, 403, "技能7", 50);
+                                mFairy.onTap(1233, 382, 1236, 391, "技能8", 50);
+                                mFairy.onTap(1118, 483, 1138, 497, "技能1", 50);
+                                mFairy.onTap(1223, 473, 1242, 489, "技能2", 50);
+                                mFairy.onTap(1039, 552, 1057, 569, "技能3", 50);
+                                mFairy.onTap(1049, 646, 1065, 663, "技能4", 50);
+                                result1 = mFairy.findPic(317, 82, 573, 164, "duishou.png");
+                                result2 = mFairy.findPic(761, 146, 876, 227, "duishou1.png");
+                                if (result1.sim > 0.8f || result2.sim > 0.8f) {
+                                    dr = true;
+                                } else {
+                                    dr = false;
+                                }
+                                result1 = mFairy.findPic(985, 463, 1191, 559, new String[]{"chakanshuju1.png", "chakanshuju.png"});
+                                result2 = mFairy.findPic(839, 5, 1277, 125, new String[]{"3v3leave.png", "3v3leave1.png"});
+                                if (result1.sim > 0.8f || result2.sim > 0.8f) {
+                                    dr = false;
+                                }
+                            }
                         }
                         if (ydcount > 17) {
                             ydcount = 0;
@@ -1433,15 +1857,21 @@ public class TimingActivity extends TaskContent {
                         result2 = mFairy.findPic(459, 5, 865, 186, new String[]{"3v3victory.png", "shengli.png", "sheng.png"});
                         if (result2.sim > 0.8f) {
                             LtLog.e(mFairy.getLineInfo("胜利一次完成"));
-                            result = mFairy.findPic("chakanshuju.png");
-                            mFairy.onTap(0.8f, result, 1242, 115, 1259, 130, "关闭查看数据", Sleep);
+                            result = mFairy.findPic(985,463,1191,559, new String[]{"chakanshuju1.png","chakanshuju.png"});
+                            mFairy.onTap(0.8f, result, 1248,88,1254,95, "关闭查看数据", Sleep);
 
                             result = mFairy.findPic(839, 5, 1277, 125, new String[]{"3v3leave.png", "3v3leave1.png"});
                             mFairy.onTap(0.8f, result, "退出副本", Sleep);
 
-                            result = mFairy.findPic(913, 429, 1269, 704, "tuichuzhanchang.png");
-                            mFairy.onTap(0.8f, result, "退出战场", Sleep);
+                            result = mFairy.findPic(839, 5, 1277, 125, new String[]{"3v3leave.png", "3v3leave1.png"});
+                            mFairy.onTap(0.8f, result, "退出副本", Sleep);
+
+                            result2 = mFairy.findPic(913, 429, 1269, 704, "tuichuzhanchang.png");
+                            mFairy.onTap(0.8f, result2, "退出战场", Sleep);
                             if (result.sim > 0.8f || result2.sim > 0.8f) {
+                                mFairy.sleep(10000);
+                                result = mFairy.findPic(913, 429, 1269, 704, "tuichuzhanchang.png");
+                                mFairy.onTap(0.8f, result, "退出战场", Sleep);
                                 setTaskEnd();
                                 return;
                             }
@@ -1449,16 +1879,22 @@ public class TimingActivity extends TaskContent {
                     }
 
 
-                    result = mFairy.findPic("chakanshuju.png");
-                    mFairy.onTap(0.8f, result, 1242, 115, 1259, 130, "关闭查看数据", Sleep);
+                    result = mFairy.findPic(985,463,1191,559, new String[]{"chakanshuju1.png","chakanshuju.png"});
+                    if (result.sim > 0.8f) {
+                        mFairy.sleep(10000);
+                        mFairy.onTap(0.8f, result, 1248,88,1254,95, "关闭查看数据", Sleep);
+                    }
 
-
+                    result = mFairy.findPic(839, 5, 1277, 125, new String[]{"3v3leave.png", "3v3leave1.png"});
+                    mFairy.onTap(0.8f, result, "退出副本", Sleep);
                     result = mFairy.findPic(839, 5, 1277, 125, new String[]{"3v3leave.png", "3v3leave1.png"});
                     mFairy.onTap(0.8f, result, "退出副本", Sleep);
 
                     result = mFairy.findPic(913, 429, 1269, 704, "tuichuzhanchang.png");
+                    mFairy.onTap(0.8f, result, "退出战场", Sleep);
+                    result = mFairy.findPic(913, 429, 1269, 704, "tuichuzhanchang.png");
                     if (result.sim > 0.8f) {
-                        mFairy.sleep(5000);
+                        mFairy.sleep(10000);
                         mFairy.onTap(0.8f, result, "退出战场", Sleep);
                     }
 

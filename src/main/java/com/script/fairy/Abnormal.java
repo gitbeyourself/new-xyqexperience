@@ -26,6 +26,10 @@ public class  Abnormal extends TaskContent {
     //全局处理
     public void erro() throws Exception {
 
+
+        result = mFairy.findPic(514,30,743,113,"wytc.png");
+        mFairy.onTap(0.8f, result, "err网页退出", Sleep);
+
         result = mFairy.findPic(46,370,494,473,"yanju.png");
         mFairy.onTap(0.8f, result, "err前往炎居", Sleep);
 
@@ -35,8 +39,19 @@ public class  Abnormal extends TaskContent {
         result = mFairy.findPic(764,467,953,527,"lingjiang.png");
         mFairy.onTap(0.8f, result, "err领奖", Sleep);
 
+        result = mFairy.findPic(384,557,587,641,"ljcz.png");
+        mFairy.onTap(0.8f, result, "err立即出战", Sleep);
+
         result = mFairy.findPic(366,260,907,491,"xnjl.png");
         mFairy.onTap(0.8f, result, 508,437,520,445,"err取消祈福", Sleep);
+
+        if (AtFairyConfig.getOption("bbxz").equals("2")) {
+            result = mFairy.findPic(727,507,1055,624,new String[]{"rxb.png", "rxb1.png"});
+            mFairy.onTap(0.8f, result, "err热血版", Sleep);
+        }else{
+            result = mFairy.findPic(212,515,517,609,new String[]{"jdb.png", "jdb1.png"});
+            mFairy.onTap(0.8f, result, "err经典版", Sleep);
+        }
 
         result = mFairy.findPic(315,433,1008,631,new String[]{"Getintogame6.png","Getintogame1.png","Getintogame2.png","Getintogame3.png","Getintogame4.png","Getintogame5.png"});
         mFairy.onTap(0.8f, result, "err开始游戏", 10000);
@@ -58,10 +73,10 @@ public class  Abnormal extends TaskContent {
             }
         }
 
-        result = mFairy.findPic(858, 480, 1035, 539, "use.png");
+        result = mFairy.findPic(858, 480, 1035, 539, new String[]{"use.png","use1.png"});
         mFairy.onTap(0.8f, result, "err自动使用", Sleep);
 
-        result = mFairy.findPic(372,272,913,501, "queding.png");
+        result = mFairy.findPic(372,272,913,501, new String[]{"queding.png","queding1.png"});
         mFairy.onTap(0.8f, result, "err确定", Sleep);
 
         result = mFairy.findPic(300,210,749,452, "fenxian1.png");
@@ -94,9 +109,8 @@ public class  Abnormal extends TaskContent {
         if (result4.sim > 0.8f) {
             result2 = mFairy.findPic(88,179,502,446,"gblianbao.png");
             if (result2.sim > 0.8f) {
-
-                result = mFairy.findPic(858, 480, 1035, 539, "use.png");
-                result1 = mFairy.findPic(329, 212, 774, 606, "smSure.png");
+                result = mFairy.findPic(858, 480, 1035, 539, new String[]{"use.png","use1.png"});
+                result1 = mFairy.findPic(329, 212, 774, 606, new String[]{"smSure.png","smSure1.png"});
                 result3 = mFairy.findPic(493, 165, 768, 230, "qljl.png");
                 if (result.sim > 0.8f) {
                     mFairy.onTap(0.8f, result, "err自动使用", Sleep);
@@ -179,7 +193,7 @@ public class  Abnormal extends TaskContent {
             x++;
             if (x>=2) {
                 x=0;
-                result = mFairy.findPic(329, 212, 774, 606, "smSure.png");
+                result = mFairy.findPic(329, 212, 774, 606, new String[]{"smSure.png","smSure1.png"});
                 mFairy.onTap(0.8f, result, "err奖励确认", Sleep);
             }
         }
@@ -233,7 +247,7 @@ public class  Abnormal extends TaskContent {
 
 
 
-        result = mFairy.findPic(858, 480, 1035, 539, "use.png");
+        result = mFairy.findPic(858, 480, 1035, 539, new String[]{"use.png","use1.png"});
         mFairy.onTap(0.8f, result, "err自动使用", Sleep);
 
         result = mFairy.findPic(656,446,1028,670, "zxqy.png");
@@ -420,8 +434,8 @@ public class  Abnormal extends TaskContent {
             result2 = mFairy.findPic(88,179,502,446,"gblianbao.png");
             if (result2.sim > 0.8f) {
 
-                result = mFairy.findPic(858, 480, 1035, 539, "use.png");
-                result1 = mFairy.findPic(329, 212, 774, 606, "smSure.png");
+                result = mFairy.findPic(858, 480, 1035, 539, new String[]{"use.png","use1.png"});
+                result1 = mFairy.findPic(329, 212, 774, 606, new String[]{"smSure.png","smSure1.png"});
                 result3 = mFairy.findPic(493, 165, 768, 230, "qljl.png");
                 if (result.sim > 0.8f) {
                     mFairy.onTap(0.8f, result, "err自动使用", Sleep);
@@ -486,6 +500,9 @@ public class  Abnormal extends TaskContent {
         mFairy.onTap(0.8f, result, 280, 513, 281, 514, "err亲了一下", Sleep);
 
         result = mFairy.findPic("errKnow1.png");
+        mFairy.onTap(0.8f, result, "err我知道了1", Sleep);
+
+        result = mFairy.findPic(1003,557,1200,639,"errKnow2.png");
         mFairy.onTap(0.8f, result, "err我知道了1", Sleep);
 
         result = mFairy.findPic("errzhanpao.png");

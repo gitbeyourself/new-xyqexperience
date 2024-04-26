@@ -31,7 +31,7 @@ public class TaskMain extends TaskContent {
      public  TaskMain (AtFairyImpl ATFairy) throws Exception {
          mFairy = ATFairy;
          mFairy.setGameName("新轩辕传奇正式服任务");
-         mFairy.setGameVersion(1323);
+         mFairy.setGameVersion(1348);
          init();
          gameUtil = new GameUtil(mFairy);
          teamTask=new TeamTask(mFairy);
@@ -49,7 +49,7 @@ public class TaskMain extends TaskContent {
          if (AtFairyConfig.getOption("optime6").equals("1")) {
              LtLog.e("=======8163=====");
          }
-         if (task_id!=1939&&task_id!=100&&task_id!=2161&&!AtFairyConfig.getOption("test").equals("1")){
+         if (task_id!=2753&&task_id!=2857&&task_id!=1939&&task_id!=100&&task_id!=2161&&!AtFairyConfig.getOption("test").equals("1")){
              gameUtil.setUp();
          }
          switch (task_id) {
@@ -195,6 +195,12 @@ public class TaskMain extends TaskContent {
                  }
 
                  limitlessTask.fieldHangMachine();
+                 break;
+             //热血版定点挂机
+             case 2857:
+                 LtLog.e("热血版定点挂机中");
+                 timingActivity.rxbtimingActivity();
+                 LtLog.e("热血版定点挂机结束");
                  break;
              case 1939:
                  singleTask.novice();

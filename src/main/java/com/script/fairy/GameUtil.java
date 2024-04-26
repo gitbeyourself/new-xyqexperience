@@ -46,6 +46,8 @@ public class GameUtil extends TaskContent {
         SleepWhile=1000;
     }
     public void inOperation() throws Exception {
+        result = mFairy.findPic(1111,3,1274,41,new String[]{"tiaoguo4.png","tiaoguo2.png","tiaoguo3.png"});
+        mFairy.onTap(0.8f, result, "跳过", 1000);
         result = mFairy.findPic("smOverGraph.png");
         if (result.sim > 0.8f) {
             LtLog.e(mFairy.getLineInfo("过图中"));
@@ -315,6 +317,9 @@ public class GameUtil extends TaskContent {
 
     public void close(final int close) throws Exception {
         new GameUtil(mFairy) {
+            public void inOperation() throws Exception {
+                super.inOperation();
+            }
             int j = 1;
             public void content_0() throws Exception {
                 /*if (Thread.currentThread().isInterrupted()){
@@ -394,7 +399,7 @@ public class GameUtil extends TaskContent {
                     result = mFairy.findPic(919,73,1073,202, new String[]{"fork.png","fork1.png"});
                     mFairy.onTap(0.8f, result, "关叉1", 300);
 
-                    result1=mFairy.findPic(1031,4,1275,171,new String[]{"cha10.png","bxcha.png","bxcha1.png","fxcha.png","shcha.png"});
+                    result1=mFairy.findPic(1031,4,1275,171,new String[]{"cha21.png","cha10.png","bxcha.png","bxcha1.png","fxcha.png","shcha.png","rxcha.png","rxcha1.png"});
                     mFairy.onTap(0.9f,result1,"关叉2",300);
 
                     result = mFairy.findPic(443,224,1108,533, new String[]{"cha16.png","zuocecha.png","cha3.png","cha4.png","cha6.png","cha2.png","cha.png","quxiao.png","cha5.png"});//"ymzjcha.png",
@@ -605,9 +610,9 @@ public int goCity(final String str) throws Exception {
 
             if (str.equals("山海界")) {
                 result = mFairy.findPic(699, 11, 1180, 264, new String[]{"bahuang1.png","bahuang.png","bh.png"});
-                mFairy.onTap(0.8f, result,  "八荒", Sleep);
+                mFairy.onTap(0.8f, result,  "八荒", 2000);
 
-                result = mFairy.findPic(51,537,243,696, "xysh.png");
+                result = mFairy.findPic(51,537,243,696, "xysh1.png");
                 mFairy.onTap(0.8f, result,  "轩辕山海", Sleep);
             }
 
@@ -693,6 +698,9 @@ public int goCity(final String str) throws Exception {
                             case 132:
                                 mFairy.onTap(1025,159,1029,171, "战殇", Sleep);
                                 break;
+                            case 133:
+                                mFairy.onTap(202,229,206,236, "银杏", Sleep);
+                                break;
                         }
                         break;
                 }
@@ -715,7 +723,7 @@ public int goCity(final String str) throws Exception {
                 result = mFairy.findPic(46,370,494,473,"yanju.png");
                 mFairy.onTap(0.8f, result, "前往炎居", Sleep);
 
-                result = mFairy.findPic(65,384,490,459,"qwdt.png");
+                result = mFairy.findPic(57,377,489,505,"qwdt.png");
                 mFairy.onTap(0.8f, result, "前往地图", Sleep);
                 setTaskName(3);
                 return;
@@ -741,13 +749,13 @@ public int goCity(final String str) throws Exception {
                     return;
                 }
             }
-            result = mFairy.findPic(65,384,490,459,"qwdt.png");
+            result = mFairy.findPic(57,377,489,505,"qwdt.png");
             if (result.sim > 0.8f) {
                 mFairy.initMatTime();
                 mFairy.onTap(0.8f, result, "前往地图", 3000);
             }
 
-            result = mFairy.findPic(65,384,490,459,"qwdt.png");
+            result = mFairy.findPic(57,377,489,505,"qwdt.png");
             if (result.sim > 0.8f) {
                 mFairy.initMatTime();
                 mFairy.onTap(0.8f, result, "前往地图", 3000);
@@ -1416,6 +1424,9 @@ public int goCity(final String str) throws Exception {
                                     break;
                                 case 132:
                                     mFairy.onTap(1025,159,1029,171, "战殇", Sleep);
+                                    break;
+                                case 133:
+                                    mFairy.onTap(202,229,206,236, "银杏", Sleep);
                                     break;
                             }
                             break;
@@ -2483,6 +2494,10 @@ public int goCity(final String str) throws Exception {
                         case "132":                     //战殇
                             x=gmx *1.8102+gmy *-0.0089+164.8439;
                             y=gmx *0.0158+gmy *1.8277+91.1791;
+                            break;
+                        case "133":                     //银杏
+                            x=gmx *1.4122+gmy *-0.0072+176.2793;
+                            y=gmx *-0.0093+gmy *1.4244+95.8071;
                             break;
 
 
@@ -3976,9 +3991,14 @@ public int goCity(final String str) throws Exception {
                 result = mFairy.findPic(947,296,1196,472,new  String[]{"Freefeed.png","Freefeed1.png"});
                 mFairy.onTap(0.8f, result,   1111,315,1116,320,"免费招财", Sleep);
 
+                result = mFairy.findPic(997,355,1102,398,"jinpiao1.png");
+                if (result.sim > 0.8f){
+                    setTaskName(4);return;
+                }
+
             }
             public void content_4() throws Exception {
-                if (overtime(5, 6)) {
+                if (overtime(3, 6)) {
                     gameUtil.close(1);
                     return;
                 }
